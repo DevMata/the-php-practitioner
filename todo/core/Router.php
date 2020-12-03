@@ -3,23 +3,33 @@
 
 class Router
 {
-    private $routes = [];
+    private $routes = [
+        "GET" => [],
+        "POST" => []
+    ];
 
-    public static function load($file){
+    public static function load($file)
+    {
         $router = new static;
         require $file;
         return $router;
     }
 
-    public function define($routes)
+    public function get($uri, $controller)
     {
-        $this->routes = $routes;
+        $this->routes["GET"][$uri] = $controller;
     }
 
-    public function direct($uri)
+    public function post($uri, $controller)
     {
-        if (array_key_exists($uri, $this->routes)) {
-            return $this->routes[$uri];
+        $this->routes["POST"][$uri] = $controller;
+    }
+
+
+    public function direct($uri, $method): string
+    {
+        if (array_key_exists($uri, $this->routes[$method])) {
+            return $this->routes[$method][$uri];
         }
 
         throw new Exception("No route");
