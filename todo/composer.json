@@ -3,5 +3,8 @@
     "classmap": [
       "./"
     ]
+  },
+  "scripts": {
+    "start:local": "php -S localhost:8888"
   }
 }
