@@ -29,9 +29,19 @@ class Router
     public function direct($uri, $method): string
     {
         if (array_key_exists($uri, $this->routes[$method])) {
-            return $this->routes[$method][$uri];
+            return $this->callToAction(...explode('@', $this->routes[$method][$uri]));
         }
 
         throw new Exception("No route");
+    }
+
+    protected function callToAction($controller, $action)
+    {
+        $controller = new $controller;
+        if (!method_exists($controller, $action)) {
+            throw new Exception("{$controller} controller does not respond to {$action} action");
+        }
+
+        return $controller->$action();
     }
 }
