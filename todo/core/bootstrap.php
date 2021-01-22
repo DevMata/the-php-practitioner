@@ -9,5 +9,5 @@ App::bind("database", new QueryBuilder(Connection::make(App::get("config")["data
 function view($name, $data = [])
 {
     extract($data);
-    return require "views/{$name}.view.php";
+    return require "app/views/{$name}.view.php";
 }
