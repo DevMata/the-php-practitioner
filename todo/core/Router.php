@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Core;
 
 class Router
 {
@@ -37,7 +38,9 @@ class Router
 
     protected function callToAction($controller, $action)
     {
+        $controller = "App\\Controllers\\{$controller}";
         $controller = new $controller;
+
         if (!method_exists($controller, $action)) {
             throw new Exception("{$controller} controller does not respond to {$action} action");
         }

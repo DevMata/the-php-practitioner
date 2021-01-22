@@ -1,5 +1,7 @@
 <?php
 
+use App\Core\App;
+
 // I needed to resolve this path, I couldn't use relative path
 App::bind('config', require dirname(dirname(__FILE__)) . "/config.php");
 App::bind("database", new QueryBuilder(Connection::make(App::get("config")["database"])));
@@ -7,5 +9,5 @@ App::bind("database", new QueryBuilder(Connection::make(App::get("config")["data
 function view($name, $data = [])
 {
     extract($data);
-    return require "views/{$name}.view.php";
+    return require "app/views/{$name}.view.php";
 }
